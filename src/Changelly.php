@@ -141,7 +141,13 @@ class Changelly
         ];
         $response = Unirest\Request::post(self::$endpoint, $headers, $message);
         if ($response->code == 200) {
-            return $response->body->result;
+            $body = $response->body;
+
+            if (isset($body->result)) {
+              return $body->result;
+            }
+
+            return $body->error;
         } else {
             throw new \Exception($response->body, $response->code);
         }
