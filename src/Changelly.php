@@ -147,7 +147,7 @@ class Changelly
               return $body->result;
             }
 
-            return $body->error;
+            throw new \Exception(json_encode($body->error), 422);
         } else {
             throw new \Exception($response->body, $response->code);
         }
