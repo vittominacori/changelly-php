@@ -12,5 +12,10 @@ echo json_encode($changelly->getCurrenciesFull()) . PHP_EOL;
 // Ensure that a basic conversion returns a value
 echo json_encode($changelly->getExchangeAmount('btc', 'eth', 1)) . PHP_EOL;
 
-// Return the error when changelly cannot process the request
-echo json_encode($changelly->getExchangeAmount('btc', 'eth', 22000000)) . PHP_EOL;
+// Throw an error, with a status code of 422, as the request cannot be processed
+try {
+    $changelly->getExchangeAmount('btc', 'eth', 22000000);
+} catch (Exception $e) {
+    echo $e->getCode() . PHP_EOL;
+    echo $e->getMessage() . PHP_EOL;
+}
